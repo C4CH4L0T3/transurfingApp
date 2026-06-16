@@ -9,6 +9,7 @@ function createWindow() {
     minHeight: 560,
     title: 'Transformación',
     backgroundColor: '#f5f5f7',
+    icon: path.join(__dirname, '..', 'build', 'icon.ico'),
     autoHideMenuBar: true, // sin barra de menú, se ve más limpio
     webPreferences: {
       contextIsolation: true,

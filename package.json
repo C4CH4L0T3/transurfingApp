@@ -9,7 +9,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "app": "npm run build && electron .",
-    "app:pack": "npm run build && electron-packager . Transformacion --platform=win32 --arch=x64 --out=release --overwrite --ignore=node_modules --ignore=\"/src\" --ignore=\"/release\" --ignore=\"/public\""
+    "icon": "node scripts/make-icon.mjs",
+    "app:pack": "npm run build && electron-packager . Transformacion --platform=win32 --arch=x64 --out=release --overwrite --icon=build/icon.ico --ignore=node_modules --ignore=\"/src\" --ignore=\"/release\" --ignore=\"/public\""
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -20,6 +21,8 @@
     "@tailwindcss/vite": "^4.1.11",
     "@vitejs/plugin-react": "^4.3.4",
     "electron": "^33.2.1",
+    "png-to-ico": "^2.1.8",
+    "sharp": "^0.33.5",
     "tailwindcss": "^4.1.11",
     "vite": "^6.0.7"
   },
