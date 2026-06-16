@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "app": "npm run build && electron .",
     "icon": "node scripts/make-icon.mjs",
-    "app:pack": "npm run build && electron-packager . Transformacion --platform=win32 --arch=x64 --out=release --overwrite --icon=build/icon.ico --ignore=node_modules --ignore=\"/src\" --ignore=\"/release\" --ignore=\"/public\""
+    "app:pack": "npm run build && electron-packager . Transformacion --platform=win32 --arch=x64 --out=release --overwrite --icon=build/icon.ico --ignore=node_modules --ignore=\"/src\" --ignore=\"/release\" --ignore=\"/public\"",
+    "app:install": "npm run app:pack && node scripts/install-app.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

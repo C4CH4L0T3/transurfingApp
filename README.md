@@ -52,8 +52,9 @@ Puedes usarla como una app nativa con su propia ventana, sin abrir el navegador
 y sin internet.
 
 ```bash
-npm run app        # compila y abre la app en una ventana de Electron (para probar)
-npm run app:pack   # genera el ejecutable en release/Transformacion-win32-x64/
+npm run app         # compila y abre la app en una ventana de Electron (para probar)
+npm run app:pack    # genera el ejecutable en release/Transformacion-win32-x64/
+npm run app:install # empaqueta y copia la app a una ubicación estable (ver abajo)
 ```
 
 Tras `npm run app:pack`, el ejecutable queda en:
@@ -61,6 +62,23 @@ Tras `npm run app:pack`, el ejecutable queda en:
 ```
 release\Transformacion-win32-x64\Transformacion.exe
 ```
+
+### Ubicación estable + arranque automático
+
+La app "de uso diario" vive en una carpeta estable por usuario, fuera del
+proyecto:
+
+```
+%LOCALAPPDATA%\Transformacion\Transformacion.exe
+```
+
+`npm run app:install` empaqueta y la copia ahí. **Cierra la app antes de
+actualizar**, o el copiado fallará por archivo bloqueado. La carpeta `release/`
+es solo salida de compilación (regenerable, fuera del repo).
+
+Para que arranque al encender el equipo hay un acceso directo en la carpeta de
+Inicio de Windows (`shell:startup`). Para desactivarlo, bórralo de ahí o usa
+*Administrador de tareas → Inicio*.
 
 Doble clic para abrirlo. Para tenerlo a mano: clic derecho sobre el `.exe` →
 **Enviar a → Escritorio (crear acceso directo)**, o **Anclar a la barra de tareas**.
