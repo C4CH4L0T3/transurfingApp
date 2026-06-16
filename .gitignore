@@ -1,0 +1,14 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# PDF original (la copia que usa la app vive en public/plan.pdf)
+Research Report (1).pdf
+.vercel

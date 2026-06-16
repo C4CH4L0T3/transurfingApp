@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+/* Modo oscuro basado en la clase .dark en <html> */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  /* Color de acento (azul tipo sistema) */
+  --color-accent-50: #eef6ff;
+  --color-accent-100: #d9ebff;
+  --color-accent-200: #bcdcff;
+  --color-accent-300: #8ec6ff;
+  --color-accent-400: #59a6ff;
+  --color-accent-500: #0a84ff;
+  --color-accent-600: #0066d6;
+  --color-accent-700: #0052ac;
+  --color-accent-800: #064588;
+  --color-accent-900: #0a3a6e;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  margin: 0;
+  background-color: #f5f5f7;
+  color: #1d1d1f;
+}
+
+.dark body {
+  background-color: #000000;
+  color: #f5f5f7;
+}
+
+/* Scrollbar discreta */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(120, 120, 128, 0.3);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(120, 120, 128, 0.5);
+  background-clip: content-box;
+}
+
+/* Animación suave de aparición */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in {
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Quita el resaltado azul al tocar en móvil */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
