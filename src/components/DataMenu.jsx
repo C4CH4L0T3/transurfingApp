@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useApp, defaultState, todayKey } from '../store.jsx'
 import { Icon } from '../ui.jsx'
+import { getSpanishVoices } from '../briefing.js'
 
 export default function DataMenu() {
   const { state, setState, update } = useApp()
@@ -21,6 +22,21 @@ export default function DataMenu() {
       d.settings.name = next.trim()
     })
   }
+
+  // Voces en español disponibles, para que elijas la más natural.
+  const [voices, setVoices] = useState([])
+  useEffect(() => {
+    let alive = true
+    getSpanishVoices().then((vs) => alive && setVoices(vs))
+    return () => {
+      alive = false
+    }
+  }, [])
+
+  const setVoice = (uri) =>
+    update((d) => {
+      d.settings.voiceURI = uri
+    })
 
   useEffect(() => {
     const onClick = (e) => {
@@ -100,6 +116,26 @@ export default function DataMenu() {
               {state.settings.name ? state.settings.name : 'sin definir'}
             </span>
           </MenuItem>
+          <div className="px-3 py-2">
+            <label className="mb-1 block text-[12px] text-neutral-500">Voz</label>
+            <select
+              value={state.settings.voiceURI || ''}
+              onChange={(e) => setVoice(e.target.value)}
+              className="w-full rounded-lg bg-neutral-100 px-2 py-1.5 text-[13px] outline-none dark:bg-white/10"
+            >
+              <option value="">Automática (mejor disponible)</option>
+              {voices.map((v) => (
+                <option key={v.voiceURI} value={v.voiceURI}>
+                  {v.name}
+                </option>
+              ))}
+            </select>
+            {voices.length === 0 && (
+              <p className="mt-1 text-[11px] text-neutral-400">
+                No se detectaron voces en español.
+              </p>
+            )}
+          </div>
           <div className="my-1 h-px bg-neutral-200/70 dark:bg-white/10" />
           <p className="px-3 pb-1 pt-1 text-[11px] font-semibold uppercase tracking-wide text-neutral-400">
             Datos

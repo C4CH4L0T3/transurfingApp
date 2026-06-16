@@ -93,8 +93,9 @@ export function defaultState() {
     settings: {
       theme: 'system',
       voiceGreeting: true, // saludo de voz al abrir la app
-      name: '', // tu nombre, para personalizar el saludo
+      name: 'Emmanuel', // tu nombre, para personalizar el saludo
       lastGreetedDate: null, // último día en que ya saludó (para no repetir)
+      voiceURI: '', // voz preferida elegida a mano (vacío = automática)
     },
   }
 }
@@ -105,6 +106,8 @@ function migrate(saved) {
   if (!saved || typeof saved !== 'object') return base
   const merged = { ...base, ...saved }
   merged.settings = { ...base.settings, ...(saved.settings || {}) }
+  // Si aún no hay nombre definido, usa el predeterminado.
+  if (!merged.settings.name) merged.settings.name = base.settings.name
   merged.monthGoals = { ...base.monthGoals, ...(saved.monthGoals || {}) }
   merged.days = saved.days || {}
   merged.followUps = Array.isArray(saved.followUps) ? saved.followUps : []

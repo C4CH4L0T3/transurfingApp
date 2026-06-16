@@ -95,36 +95,62 @@ function loadVoices() {
   })
 }
 
-// Elige una voz en español, dando preferencia a voces femeninas conocidas.
-export function pickSpanishVoice(voices) {
+// Devuelve todas las voces en español disponibles (para el selector del menú).
+export async function getSpanishVoices() {
+  if (!('speechSynthesis' in window)) return []
+  const voices = await loadVoices()
+  return voices.filter((v) => (v.lang || '').toLowerCase().startsWith('es'))
+}
+
+// ¿La voz suena "natural" (neural)? Windows 11 las nombra así.
+function isNatural(v) {
+  return /natural|neural|online/i.test(v.name)
+}
+
+// Elige una voz en español. Prioriza: voz elegida a mano > naturales >
+// femeninas conocidas > latinoamérica > cualquiera.
+export function pickSpanishVoice(voices, preferredURI = '') {
   const es = voices.filter((v) => (v.lang || '').toLowerCase().startsWith('es'))
   if (!es.length) return null
-  const prefer = [
+
+  if (preferredURI) {
+    const chosen = es.find((v) => v.voiceURI === preferredURI)
+    if (chosen) return chosen
+  }
+
+  const femaleNames = [
     'helena', 'sabina', 'laura', 'paulina', 'dalia', 'ximena', 'elvira',
     'monica', 'mónica', 'marisol', 'luciana', 'esperanza', 'female', 'mujer',
   ]
-  const female = es.find((v) => prefer.some((p) => v.name.toLowerCase().includes(p)))
-  // Preferimos español de América Latina si existe, luego cualquiera.
-  const latam = es.find((v) => /es[-_](mx|co|us|la|ar|cl)/i.test(v.lang))
-  return female || latam || es[0]
+  const isFemale = (v) => femaleNames.some((p) => v.name.toLowerCase().includes(p))
+
+  // 1) Natural + femenina, 2) cualquier natural, 3) femenina, 4) latam, 5) la 1ª
+  return (
+    es.find((v) => isNatural(v) && isFemale(v)) ||
+    es.find((v) => isNatural(v)) ||
+    es.find((v) => isFemale(v)) ||
+    es.find((v) => /es[-_](mx|co|us|la|ar|cl)/i.test(v.lang)) ||
+    es[0]
+  )
 }
 
-// Dice el texto en voz alta. handlers: { onstart, onend }
+// Dice el texto en voz alta. handlers: { onstart, onend, voiceURI }
 export async function speak(text, handlers = {}) {
   if (!('speechSynthesis' in window)) return false
   try {
     window.speechSynthesis.cancel()
     const voices = await loadVoices()
     const utter = new SpeechSynthesisUtterance(text)
-    const voice = pickSpanishVoice(voices)
+    const voice = pickSpanishVoice(voices, handlers.voiceURI)
     if (voice) {
       utter.voice = voice
       utter.lang = voice.lang
     } else {
       utter.lang = 'es-ES'
     }
-    utter.rate = 1.0
-    utter.pitch = 1.05
+    // Un pelín más lento y tono natural ayuda a que no suene mecánica.
+    utter.rate = 0.98
+    utter.pitch = 1.0
     utter.onstart = () => handlers.onstart && handlers.onstart()
     utter.onend = () => handlers.onend && handlers.onend()
     utter.onerror = () => handlers.onend && handlers.onend()

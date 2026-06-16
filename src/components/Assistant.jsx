@@ -15,7 +15,7 @@ export default function Assistant() {
   const play = () => {
     const text = buildBriefingText(state)
     setSpeaking(true)
-    speak(text, { onend: () => setSpeaking(false) })
+    speak(text, { onend: () => setSpeaking(false), voiceURI: state.settings.voiceURI })
   }
 
   const toggle = () => {
@@ -37,7 +37,10 @@ export default function Assistant() {
 
     const id = setTimeout(() => {
       setSpeaking(true)
-      speak(buildBriefingText(state), { onend: () => setSpeaking(false) })
+      speak(buildBriefingText(state), {
+        onend: () => setSpeaking(false),
+        voiceURI: state.settings.voiceURI,
+      })
       update((d) => {
         d.settings.lastGreetedDate = t
       })
