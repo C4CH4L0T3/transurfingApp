@@ -9,6 +9,7 @@ import {
   DEFAULT_MONTH_GOALS,
   COURSE_TOTAL_DAYS,
 } from './data.js'
+import { COURSE_78 } from './course78Data.js'
 
 // ---------------------------------------------------------------------------
 // Utilidades de fecha (siempre en hora local)
@@ -57,12 +58,16 @@ export function emptyDay() {
 }
 
 function makeCourseDays() {
-  return Array.from({ length: COURSE_TOTAL_DAYS }, () => ({
-    title: '',
-    notes: '',
-    completed: false,
-    completedOn: null, // dateKey en que se completó
-  }))
+  return Array.from({ length: COURSE_TOTAL_DAYS }, (_, i) => {
+    const preset = COURSE_78[i] || { title: '', task: '' }
+    return {
+      title: preset.title || '', // nombre del principio (preestablecido, editable)
+      task: preset.task || '', // tarea del día (preestablecida, editable)
+      notes: '', // tu reflexión personal
+      completed: false,
+      completedOn: null, // dateKey en que se completó
+    }
+  })
 }
 
 export function defaultState() {
@@ -102,12 +107,21 @@ function migrate(saved) {
   merged.morningHabits = Array.isArray(saved.morningHabits) ? saved.morningHabits : base.morningHabits
   merged.lifeAreas = Array.isArray(saved.lifeAreas) ? saved.lifeAreas : base.lifeAreas
   merged.nightItems = Array.isArray(saved.nightItems) ? saved.nightItems : base.nightItems
-  // Curso
+  // Curso: combina lo guardado con el contenido por defecto, rellenando los
+  // campos vacíos (título y tarea) sin pisar lo que ya hayas editado o escrito.
   const course = saved.course || {}
-  const days = Array.isArray(course.days) ? course.days.slice(0, COURSE_TOTAL_DAYS) : []
-  while (days.length < COURSE_TOTAL_DAYS) {
-    days.push({ title: '', notes: '', completed: false, completedOn: null })
-  }
+  const savedDays = Array.isArray(course.days) ? course.days : []
+  const days = Array.from({ length: COURSE_TOTAL_DAYS }, (_, i) => {
+    const preset = COURSE_78[i] || { title: '', task: '' }
+    const d = savedDays[i] || {}
+    return {
+      title: d.title ? d.title : preset.title || '',
+      task: d.task ? d.task : preset.task || '',
+      notes: d.notes || '',
+      completed: !!d.completed,
+      completedOn: d.completedOn || null,
+    }
+  })
   merged.course = {
     currentDay: course.currentDay || 1,
     days,

@@ -19,11 +19,45 @@ export default function Today() {
     <div className="space-y-5">
       <IdentityHeader />
       <DailyQuote />
+      <CourseToday />
       <MorningProtocol />
       <Prospecting />
       <LifeAreas />
       <NightProtocol />
     </div>
+  )
+}
+
+// --- Principio y tarea del día actual del curso de 78 días ---
+function CourseToday() {
+  const { state } = useApp()
+  const n = state.course.currentDay
+  const day = state.course.days[n - 1]
+  if (!day || (!day.title && !day.task)) return null
+
+  return (
+    <Card className="p-6 sm:p-7">
+      <div className="flex items-center justify-between">
+        <span className="text-[11px] font-semibold uppercase tracking-widest text-accent-500">
+          Principio de hoy · Día {n} de 78
+        </span>
+        {day.completed && (
+          <span className="text-[13px] font-medium text-accent-600 dark:text-accent-400">
+            Completado ✓
+          </span>
+        )}
+      </div>
+      {day.title && (
+        <h3 className="mt-2 text-[20px] font-semibold tracking-tight text-neutral-900 dark:text-white">
+          {day.title}
+        </h3>
+      )}
+      {day.task && (
+        <p className="mt-2 text-[15px] leading-relaxed text-neutral-600 dark:text-neutral-300">
+          {day.task}
+        </p>
+      )}
+    </Card>
   )
 }
 
