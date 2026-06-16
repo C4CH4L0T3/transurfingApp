@@ -46,6 +46,30 @@ GitHub Pages) o abrirla desde un servidor estático.
 - Menú **⋯** (arriba a la derecha): **Exportar respaldo** (JSON, incluye las notas de
   los 78 días), **Importar respaldo** y **Reiniciar todo**.
 
+## App de escritorio (Windows, Electron)
+
+Puedes usarla como una app nativa con su propia ventana, sin abrir el navegador
+y sin internet.
+
+```bash
+npm run app        # compila y abre la app en una ventana de Electron (para probar)
+npm run app:pack   # genera el ejecutable en release/Transformacion-win32-x64/
+```
+
+Tras `npm run app:pack`, el ejecutable queda en:
+
+```
+release\Transformacion-win32-x64\Transformacion.exe
+```
+
+Doble clic para abrirlo. Para tenerlo a mano: clic derecho sobre el `.exe` →
+**Enviar a → Escritorio (crear acceso directo)**, o **Anclar a la barra de tareas**.
+
+> Nota: la app de escritorio guarda sus datos por separado de la versión web
+> (cada una usa su propio almacenamiento). Usa **Exportar/Importar** (menú ⋯) si
+> quieres pasar tu progreso de una a otra. Las fuentes web (Inter) caen a la
+> tipografía del sistema cuando no hay internet, sin afectar el diseño.
+
 ## El plan en PDF
 
 El botón **“Ver el plan”** abre `public/plan.pdf` en una pestaña nueva.
