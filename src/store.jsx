@@ -90,7 +90,12 @@ export function defaultState() {
       streak: 0,
       lastCompletedOn: null,
     },
-    settings: { theme: 'system' },
+    settings: {
+      theme: 'system',
+      voiceGreeting: true, // saludo de voz al abrir la app
+      name: '', // tu nombre, para personalizar el saludo
+      lastGreetedDate: null, // último día en que ya saludó (para no repetir)
+    },
   }
 }
 

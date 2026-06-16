@@ -3,6 +3,7 @@ import { AppProvider, useApp } from './store.jsx'
 import { PLAN_PDF_PATH } from './config.js'
 import { IconButton, Icon } from './ui.jsx'
 import DataMenu from './components/DataMenu.jsx'
+import Assistant from './components/Assistant.jsx'
 import Today from './components/Today.jsx'
 import MonthGoals from './components/MonthGoals.jsx'
 import Course78 from './components/Course78.jsx'
@@ -65,6 +66,7 @@ function Shell() {
             >
               <Icon.External />
             </a>
+            <Assistant />
             <ThemeToggle />
             <DataMenu />
           </div>

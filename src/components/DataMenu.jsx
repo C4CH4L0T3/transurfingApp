@@ -3,10 +3,24 @@ import { useApp, defaultState, todayKey } from '../store.jsx'
 import { Icon } from '../ui.jsx'
 
 export default function DataMenu() {
-  const { state, setState } = useApp()
+  const { state, setState, update } = useApp()
   const [open, setOpen] = useState(false)
   const fileRef = useRef(null)
   const menuRef = useRef(null)
+
+  const toggleGreeting = () =>
+    update((d) => {
+      d.settings.voiceGreeting = !d.settings.voiceGreeting
+    })
+
+  const editName = () => {
+    const current = state.settings.name || ''
+    const next = window.prompt('¿Cómo quieres que te salude la asistente?', current)
+    if (next === null) return // canceló
+    update((d) => {
+      d.settings.name = next.trim()
+    })
+  }
 
   useEffect(() => {
     const onClick = (e) => {
@@ -70,7 +84,26 @@ export default function DataMenu() {
       </button>
 
       {open && (
-        <div className="absolute right-0 z-50 mt-2 w-60 overflow-hidden rounded-2xl bg-white p-1.5 shadow-xl ring-1 ring-black/5 dark:bg-[#2c2c2e] dark:ring-white/10">
+        <div className="absolute right-0 z-50 mt-2 w-64 overflow-hidden rounded-2xl bg-white p-1.5 shadow-xl ring-1 ring-black/5 dark:bg-[#2c2c2e] dark:ring-white/10">
+          <p className="px-3 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-wide text-neutral-400">
+            Asistente de voz
+          </p>
+          <MenuItem onClick={toggleGreeting}>
+            Saludo al abrir
+            <span className="ml-2 text-[13px] text-neutral-400">
+              {state.settings.voiceGreeting ? 'Activado' : 'Desactivado'}
+            </span>
+          </MenuItem>
+          <MenuItem onClick={editName}>
+            Mi nombre
+            <span className="ml-2 text-[13px] text-neutral-400">
+              {state.settings.name ? state.settings.name : 'sin definir'}
+            </span>
+          </MenuItem>
+          <div className="my-1 h-px bg-neutral-200/70 dark:bg-white/10" />
+          <p className="px-3 pb-1 pt-1 text-[11px] font-semibold uppercase tracking-wide text-neutral-400">
+            Datos
+          </p>
           <MenuItem onClick={exportJSON}>Exportar respaldo (.json)</MenuItem>
           <MenuItem onClick={() => fileRef.current?.click()}>Importar respaldo…</MenuItem>
           <div className="my-1 h-px bg-neutral-200/70 dark:bg-white/10" />

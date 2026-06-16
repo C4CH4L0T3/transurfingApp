@@ -14,6 +14,8 @@ function createWindow() {
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
+      // Permite que el saludo de voz suene al abrir sin requerir un clic.
+      autoplayPolicy: 'no-user-gesture-required',
     },
   })
 
