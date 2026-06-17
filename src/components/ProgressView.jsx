@@ -7,7 +7,7 @@ import {
 } from '../store.jsx'
 import { PROSPECTING_GOAL } from '../config.js'
 import { COURSE_TOTAL_DAYS } from '../data.js'
-import { Card, ProgressBar, Icon } from '../ui.jsx'
+import { Card, ProgressBar, Icon, Ornament } from '../ui.jsx'
 
 function Stat({ label, value, sub, flame }) {
   return (
@@ -35,9 +35,10 @@ export default function ProgressView() {
 
   return (
     <div className="space-y-5">
-      <header className="px-1 pt-1">
-        <h1 className="text-[26px] font-semibold tracking-tight">Progreso</h1>
-        <p className="mt-1 text-[15px] text-neutral-500 dark:text-neutral-400">
+      <header className="px-1 pt-2 text-center">
+        <h1 className="text-[30px] font-semibold tracking-tight">Progreso</h1>
+        <Ornament className="mt-2" />
+        <p className="mt-2 text-[15px] italic text-neutral-500 dark:text-neutral-400">
           La constancia, vista de un vistazo.
         </p>
       </header>

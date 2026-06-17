@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useApp, dateKey, todayKey, monthStreak } from '../store.jsx'
-import { Card, Icon } from '../ui.jsx'
+import { Card, Icon, Ornament } from '../ui.jsx'
 
 export default function MonthGoals() {
   const { state } = useApp()
@@ -8,9 +8,10 @@ export default function MonthGoals() {
 
   return (
     <div className="space-y-5">
-      <header className="px-1 pt-1">
-        <h1 className="text-[26px] font-semibold tracking-tight">Metas del mes</h1>
-        <p className="mt-1 text-[15px] text-neutral-500 dark:text-neutral-400">
+      <header className="px-1 pt-2 text-center">
+        <h1 className="text-[30px] font-semibold tracking-tight">Metas del mes</h1>
+        <Ornament className="mt-2" />
+        <p className="mt-2 text-[15px] italic text-neutral-500 dark:text-neutral-400">
           Lo que controlas es el proceso. El resultado llega como consecuencia.
         </p>
       </header>

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useApp, todayKey, addDaysKey, courseCompletedCount } from '../store.jsx'
 import { COURSE_TOTAL_DAYS } from '../data.js'
-import { Card, ProgressBar, Icon } from '../ui.jsx'
+import { Card, ProgressBar, Icon, Ornament } from '../ui.jsx'
 
 export default function Course78() {
   const { state, update } = useApp()
@@ -53,9 +53,10 @@ export default function Course78() {
 
   return (
     <div className="space-y-5">
-      <header className="px-1 pt-1">
-        <h1 className="text-[26px] font-semibold tracking-tight">78 días</h1>
-        <p className="mt-1 text-[15px] text-neutral-500 dark:text-neutral-400">
+      <header className="px-1 pt-2 text-center">
+        <h1 className="text-[30px] font-semibold tracking-tight">78 días</h1>
+        <Ornament className="mt-2" />
+        <p className="mt-2 text-[15px] italic text-neutral-500 dark:text-neutral-400">
           Un principio por día, escrito por ti. El contenido lo pones desde tu libro.
         </p>
       </header>

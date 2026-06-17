@@ -91,7 +91,7 @@ export function defaultState() {
       lastCompletedOn: null,
     },
     settings: {
-      theme: 'system',
+      theme: 'time', // 'time' = claro de día / oscuro de noche · 'light' · 'dark'
       voiceGreeting: true, // saludo de voz al abrir la app
       name: 'Emmanuel', // tu nombre, para personalizar el saludo
       lastGreetedDate: null, // último día en que ya saludó (para no repetir)
@@ -108,6 +108,8 @@ function migrate(saved) {
   merged.settings = { ...base.settings, ...(saved.settings || {}) }
   // Si aún no hay nombre definido, usa el predeterminado.
   if (!merged.settings.name) merged.settings.name = base.settings.name
+  // El antiguo tema 'system' pasa a 'time' (claro/oscuro según la hora).
+  if (merged.settings.theme === 'system') merged.settings.theme = 'time'
   merged.monthGoals = { ...base.monthGoals, ...(saved.monthGoals || {}) }
   merged.days = saved.days || {}
   merged.followUps = Array.isArray(saved.followUps) ? saved.followUps : []
@@ -167,12 +169,15 @@ export function AppProvider({ children }) {
     }
   }, [state])
 
-  // Tema (clase .dark en <html>).
+  // Tema (clase .dark en <html>). 'time' = claro de día, oscuro de noche.
   useEffect(() => {
     const apply = () => {
       const theme = state.settings.theme
+      const hour = new Date().getHours()
+      const night = hour < 7 || hour >= 19 // noche: 19:00–06:59
       const dark =
         theme === 'dark' ||
+        (theme === 'time' && night) ||
         (theme === 'system' &&
           window.matchMedia('(prefers-color-scheme: dark)').matches)
       document.documentElement.classList.toggle('dark', dark)
@@ -181,7 +186,14 @@ export function AppProvider({ children }) {
     const mq = window.matchMedia('(prefers-color-scheme: dark)')
     const handler = () => state.settings.theme === 'system' && apply()
     mq.addEventListener('change', handler)
-    return () => mq.removeEventListener('change', handler)
+    // En modo 'time' revisa cada minuto por si cae el atardecer / amanecer.
+    const interval = setInterval(() => {
+      if (state.settings.theme === 'time') apply()
+    }, 60 * 1000)
+    return () => {
+      mq.removeEventListener('change', handler)
+      clearInterval(interval)
+    }
   }, [state.settings.theme])
 
   // Detecta el cambio de día real para refrescar la pantalla "Hoy".

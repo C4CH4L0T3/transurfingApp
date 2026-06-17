@@ -4,20 +4,34 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text",
-    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  /* Tipografía clásica del Renacimiento */
+  --font-sans: "EB Garamond", Georgia, "Times New Roman", serif;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-roman: "Cinzel", "Cormorant Garamond", Georgia, serif;
 
-  /* Color de acento (azul tipo sistema) */
-  --color-accent-50: #eef6ff;
-  --color-accent-100: #d9ebff;
-  --color-accent-200: #bcdcff;
-  --color-accent-300: #8ec6ff;
-  --color-accent-400: #59a6ff;
-  --color-accent-500: #0a84ff;
-  --color-accent-600: #0066d6;
-  --color-accent-700: #0052ac;
-  --color-accent-800: #064588;
-  --color-accent-900: #0a3a6e;
+  /* Acento: oro viejo */
+  --color-accent-50: #faf3df;
+  --color-accent-100: #f3e6c0;
+  --color-accent-200: #e8d29a;
+  --color-accent-300: #d9b86a;
+  --color-accent-400: #c89f43;
+  --color-accent-500: #b3852a;
+  --color-accent-600: #956c1f;
+  --color-accent-700: #785619;
+  --color-accent-800: #5e4314;
+  --color-accent-900: #4a3510;
+
+  /* Neutros cálidos (pergamino → sepia) */
+  --color-neutral-50: #f7f0df;
+  --color-neutral-100: #efe5cf;
+  --color-neutral-200: #e3d4b4;
+  --color-neutral-300: #cdb78f;
+  --color-neutral-400: #a3906f;
+  --color-neutral-500: #847152;
+  --color-neutral-600: #6a5840;
+  --color-neutral-700: #52432f;
+  --color-neutral-800: #3a2e1f;
+  --color-neutral-900: #2a2015;
 }
 
 html {
@@ -26,16 +40,70 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Textura de pergamino (grano sutil) */
 body {
   font-family: var(--font-sans);
   margin: 0;
-  background-color: #f5f5f7;
-  color: #1d1d1f;
+  color: #3a2e1f;
+  background-color: #e9dcbf;
+  background-image: radial-gradient(
+      1200px 600px at 50% -10%,
+      rgba(255, 250, 235, 0.7),
+      transparent 60%
+    ),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  background-attachment: fixed;
 }
 
 .dark body {
-  background-color: #000000;
-  color: #f5f5f7;
+  color: #ece0c4;
+  background-color: #15100a;
+  background-image: radial-gradient(
+      1100px 560px at 50% -10%,
+      rgba(120, 92, 40, 0.22),
+      transparent 60%
+    ),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+}
+
+/* Tipografía de títulos */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+}
+
+/* Superficie tipo "panel" (cartas, menús) */
+.surface {
+  background-color: #f7efdb;
+  border: 1px solid rgba(150, 120, 60, 0.2);
+  box-shadow:
+    0 1px 2px rgba(80, 60, 20, 0.06),
+    0 16px 40px -28px rgba(80, 60, 20, 0.45);
+}
+.dark .surface {
+  background-color: #221a11;
+  border-color: rgba(201, 162, 39, 0.16);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.35),
+    0 18px 44px -28px rgba(0, 0, 0, 0.7);
+}
+
+/* Etiqueta tipo inscripción romana */
+.overline {
+  font-family: var(--font-roman);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Filete dorado decorativo */
+.gold-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(179, 133, 42, 0.55),
+    transparent
+  );
 }
 
 /* Scrollbar discreta */
@@ -44,17 +112,17 @@ body {
   height: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(120, 120, 128, 0.3);
+  background: rgba(150, 120, 60, 0.35);
   border-radius: 999px;
   border: 3px solid transparent;
   background-clip: content-box;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(120, 120, 128, 0.5);
+  background: rgba(150, 120, 60, 0.55);
   background-clip: content-box;
 }
 
-/* Animación suave de aparición */
+/* Aparición suave */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -66,10 +134,9 @@ body {
   }
 }
 .animate-fade-in {
-  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Quita el resaltado azul al tocar en móvil */
 * {
   -webkit-tap-highlight-color: transparent;
 }

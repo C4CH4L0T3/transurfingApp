@@ -6,17 +6,16 @@ import {
   morningStreak,
   morningComplete,
 } from '../store.jsx'
-import { Card, Check, Icon } from '../ui.jsx'
+import { Card, Check, Icon, Ornament } from '../ui.jsx'
 import EditableTaskList from './EditableTaskList.jsx'
 import DailyQuote from './DailyQuote.jsx'
 import Prospecting from './Prospecting.jsx'
 import NightProtocol from './NightProtocol.jsx'
 
 export default function Today() {
-  const { state, today } = useApp()
-
   return (
     <div className="space-y-5">
+      <Hero />
       <IdentityHeader />
       <DailyQuote />
       <CourseToday />
@@ -24,6 +23,30 @@ export default function Today() {
       <Prospecting />
       <LifeAreas />
       <NightProtocol />
+    </div>
+  )
+}
+
+// --- Hero con obra renacentista (Botticelli, dominio público) ---
+function Hero() {
+  return (
+    <div className="overflow-hidden rounded-3xl surface p-0">
+      <div className="relative h-44 sm:h-52">
+        <img
+          src="/art/venus.jpg"
+          alt="El nacimiento de Venus, Sandro Botticelli (c. 1485)"
+          className="h-full w-full object-cover object-[center_28%] [filter:sepia(0.18)_contrast(1.02)_saturate(0.95)]"
+          loading="eager"
+        />
+        {/* Fundido hacia el pergamino para legibilidad */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#f7efdb] via-[#f7efdb]/10 to-transparent dark:from-[#221a11] dark:via-[#221a11]/20" />
+        <div className="absolute inset-x-0 bottom-0 p-5 text-center">
+          <p className="overline text-[11px] text-accent-700 dark:text-accent-300">
+            El arte de rehacerse
+          </p>
+          <Ornament className="mt-1.5" />
+        </div>
+      </div>
     </div>
   )
 }
@@ -111,7 +134,7 @@ function IdentityHeader() {
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
             rows={3}
-            className="w-full resize-none rounded-2xl bg-white px-4 py-3 text-[22px] font-semibold leading-tight tracking-tight outline-none ring-2 ring-accent-400 dark:bg-[#1c1c1e]"
+            className="w-full resize-none rounded-2xl bg-neutral-50 px-4 py-3 text-[22px] font-semibold leading-tight tracking-tight outline-none ring-2 ring-accent-400 dark:bg-white/[0.04]"
           />
           <div className="mt-2 flex gap-2">
             <button

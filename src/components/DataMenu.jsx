@@ -100,7 +100,7 @@ export default function DataMenu() {
       </button>
 
       {open && (
-        <div className="absolute right-0 z-50 mt-2 w-64 overflow-hidden rounded-2xl bg-white p-1.5 shadow-xl ring-1 ring-black/5 dark:bg-[#2c2c2e] dark:ring-white/10">
+        <div className="surface absolute right-0 z-50 mt-2 w-64 overflow-hidden rounded-2xl p-1.5">
           <p className="px-3 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-wide text-neutral-400">
             Asistente de voz
           </p>

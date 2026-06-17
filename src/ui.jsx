@@ -4,13 +4,7 @@
 
 export function Card({ children, className = '', ...props }) {
   return (
-    <div
-      className={
-        'rounded-3xl bg-white/90 dark:bg-[#1c1c1e]/90 ring-1 ring-black/[0.04] dark:ring-white/[0.06] shadow-sm ' +
-        className
-      }
-      {...props}
-    >
+    <div className={'surface rounded-3xl ' + className} {...props}>
       {children}
     </div>
   )
@@ -18,9 +12,21 @@ export function Card({ children, className = '', ...props }) {
 
 export function SectionLabel({ children }) {
   return (
-    <h2 className="text-[13px] font-semibold uppercase tracking-wide text-neutral-400 dark:text-neutral-500">
-      {children}
-    </h2>
+    <h2 className="overline text-[12px] text-accent-700 dark:text-accent-400">{children}</h2>
+  )
+}
+
+// Ornamento dorado centrado (fleurón) para acompañar títulos.
+export function Ornament({ className = '' }) {
+  return (
+    <div className={'flex items-center justify-center gap-3 text-accent-500/70 ' + className}>
+      <span className="h-px w-10 bg-gradient-to-r from-transparent to-accent-500/50" />
+      <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="currentColor">
+        <path d="M12 2c1.2 3 2.8 4.6 5.8 5.8C14.8 9 13.2 10.6 12 13.6 10.8 10.6 9.2 9 6.2 7.8 9.2 6.6 10.8 5 12 2z" />
+        <circle cx="12" cy="19" r="1.6" />
+      </svg>
+      <span className="h-px w-10 bg-gradient-to-l from-transparent to-accent-500/50" />
+    </div>
   )
 }
 
@@ -157,6 +163,12 @@ export const Icon = {
   Stop: (p) => (
     <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5" {...p}>
       <rect x="6" y="6" width="12" height="12" rx="2.5" />
+    </svg>
+  ),
+  Clock: (p) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" {...p}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 2" />
     </svg>
   ),
 }
