@@ -11,6 +11,7 @@ import EditableTaskList from './EditableTaskList.jsx'
 import DailyQuote from './DailyQuote.jsx'
 import Prospecting from './Prospecting.jsx'
 import NightProtocol from './NightProtocol.jsx'
+import venusImg from '../assets/venus.jpg'
 
 export default function Today() {
   return (
@@ -33,7 +34,7 @@ function Hero() {
     <div className="overflow-hidden rounded-3xl surface p-0">
       <div className="relative h-44 sm:h-52">
         <img
-          src="/art/venus.jpg"
+          src={venusImg}
           alt="El nacimiento de Venus, Sandro Botticelli (c. 1485)"
           className="h-full w-full object-cover object-[center_28%] [filter:sepia(0.18)_contrast(1.02)_saturate(0.95)]"
           loading="eager"
