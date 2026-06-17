@@ -11,7 +11,7 @@ import EditableTaskList from './EditableTaskList.jsx'
 import DailyQuote from './DailyQuote.jsx'
 import Prospecting from './Prospecting.jsx'
 import NightProtocol from './NightProtocol.jsx'
-import venusImg from '../assets/venus.jpg'
+import { artForDay } from '../art.js'
 
 export default function Today() {
   return (
@@ -28,22 +28,29 @@ export default function Today() {
   )
 }
 
-// --- Hero con obra renacentista (Botticelli, dominio público) ---
+// --- Hero con una obra renacentista distinta por día (dominio público) ---
 function Hero() {
+  const { today } = useApp()
+  const art = artForDay(today)
+
   return (
     <div className="overflow-hidden rounded-3xl surface p-0">
       <div className="relative h-44 sm:h-52">
         <img
-          src={venusImg}
-          alt="El nacimiento de Venus, Sandro Botticelli (c. 1485)"
-          className="h-full w-full object-cover object-[center_28%] [filter:sepia(0.18)_contrast(1.02)_saturate(0.95)]"
+          src={art.src}
+          alt={`${art.title} — ${art.author}`}
+          style={{ objectPosition: art.pos }}
+          className="h-full w-full object-cover [filter:sepia(0.18)_contrast(1.02)_saturate(0.95)]"
           loading="eager"
         />
         {/* Fundido hacia el pergamino para legibilidad */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#f7efdb] via-[#f7efdb]/10 to-transparent dark:from-[#221a11] dark:via-[#221a11]/20" />
         <div className="absolute inset-x-0 bottom-0 p-5 text-center">
           <p className="overline text-[11px] text-accent-700 dark:text-accent-300">
-            El arte de rehacerse
+            {art.title}
+          </p>
+          <p className="mt-0.5 text-[12px] italic text-neutral-500 dark:text-neutral-400">
+            {art.author}
           </p>
           <Ornament className="mt-1.5" />
         </div>
