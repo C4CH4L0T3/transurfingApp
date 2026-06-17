@@ -48,8 +48,8 @@ function Shell() {
         <div className="mx-auto flex max-w-2xl items-center justify-between gap-3 px-4 py-3">
           <div className="flex items-center gap-2.5">
             <div className="flex h-8 w-8 items-center justify-center rounded-full border border-accent-500/50 bg-gradient-to-b from-accent-300 to-accent-600 text-[#2a2015] shadow-sm">
-              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 13l4 4L19 7" />
+              <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="currentColor">
+                <path d="M12 3 C12.7 8.4 13.3 9 18.7 9.7 C13.3 10.4 12.7 11 12 16.4 C11.3 11 10.7 10.4 5.3 9.7 C10.7 9 11.3 8.4 12 3 Z" transform="translate(0 2)" />
               </svg>
             </div>
             <span className="font-roman text-[15px] font-semibold tracking-[0.12em] text-neutral-800 dark:text-neutral-100">
