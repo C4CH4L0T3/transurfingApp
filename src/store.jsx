@@ -300,3 +300,28 @@ export function monthStreak(state) {
 export function courseCompletedCount(state) {
   return state.course.days.filter((d) => d.completed).length
 }
+
+// Progreso por área de vida en una ventana de N días (hasta hoy).
+// Para cada área: tareas completadas, posibles (tareas × días) y tasa.
+export function lifeAreaProgress(state, windowDays = 7) {
+  const today = todayKey()
+  const keys = []
+  for (let i = 0; i < windowDays; i++) keys.push(addDaysKey(today, -i))
+  return state.lifeAreas.map((area) => {
+    let completed = 0
+    let possible = 0
+    for (const key of keys) {
+      possible += area.tasks.length
+      const a = state.days[key] && state.days[key].lifeAreas[area.id]
+      if (a) for (const t of area.tasks) if (a[t.id]) completed += 1
+    }
+    return {
+      id: area.id,
+      name: area.name,
+      emoji: area.emoji,
+      completed,
+      possible,
+      rate: possible ? completed / possible : 0,
+    }
+  })
+}
